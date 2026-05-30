@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Games</title>
+<style>
+  :root {
+    --bg: #0b0f17;
+    --panel: #141a24;
+    --panel-2: #1b2330;
+    --line: #232c3a;
+    --text: #eaf0f7;
+    --muted: #8a97a8;
+    --accent: #5cc8ff;
+    --accent-2: #7c5cff;
+    --good: #46d39a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    min-height: 100%;
+    background:
+      radial-gradient(1200px 700px at 50% -10%, #16203180, transparent),
+      var(--bg);
+    color: var(--text);
+    font-family: "SF Mono", "Cascadia Code", ui-monospace, Menlo, Consolas, monospace;
+    -webkit-font-smoothing: antialiased;
+  }
+  body { display: flex; flex-direction: column; align-items: center; padding: 64px 20px 48px; min-height: 100vh; }
+  header { text-align: center; margin-bottom: 48px; }
+  h1 { font-size: 48px; letter-spacing: 10px; font-weight: 700; }
+  h1 .accent { color: var(--accent); }
+  .tagline { color: var(--muted); font-size: 13px; margin-top: 12px; letter-spacing: 1px; line-height: 1.8; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
+    gap: 22px;
+    width: 100%;
+    max-width: 960px;
+    justify-content: center;
+  }
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+    min-height: 220px;
+  }
+  a.card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 14px 40px #5cc8ff1f;
+  }
+  .card .thumb {
+    height: 88px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: #06090f;
+    border: 1px solid var(--line);
+  }
+  .blk { width: 16px; height: 16px; border-radius: 3px; }
+  .card h2 { font-size: 20px; letter-spacing: 1px; }
+  .card p { color: var(--muted); font-size: 12px; line-height: 1.7; margin-top: 8px; flex: 1; }
+  .badge {
+    align-self: flex-start;
+    margin-top: 16px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  .badge.play { background: #0e1a22; color: var(--good); border: 1px solid #2a6f8f; }
+  .badge.soon { background: #181d27; color: var(--muted); border: 1px solid var(--line); }
+  .card.disabled { opacity: 0.6; cursor: default; }
+
+  footer { margin-top: 48px; color: var(--muted); font-size: 11px; letter-spacing: 1px; }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>GA<span class="accent">MES</span></h1>
+    <p class="tagline">Built to be played, not to be easy.<br>Sharp games for sharp minds.</p>
+  </header>
+
+  <main class="grid">
+    <a class="card" href="tetris.html">
+      <div class="thumb">
+        <span class="blk" style="background:#36c5e0"></span>
+        <span class="blk" style="background:#c061ff"></span>
+        <span class="blk" style="background:#ff9f43"></span>
+        <span class="blk" style="background:#3fd66f"></span>
+      </div>
+      <h2>Tetris</h2>
+      <p>Guideline mechanics: SRS rotation with wall kicks, 7-bag, hold, ghost,
+         T-spins, back-to-back and combo scoring. Music speeds up as you do.</p>
+      <span class="badge play">Play &rarr;</span>
+    </a>
+
+    <div class="card disabled">
+      <div class="thumb">
+        <span class="blk" style="background:#2a3340"></span>
+        <span class="blk" style="background:#2a3340"></span>
+        <span class="blk" style="background:#2a3340"></span>
+      </div>
+      <h2>Brain Gym</h2>
+      <p>A workout for working memory, pattern recognition, and mental rotation.
+         Designed to stretch the mind, not pass the time.</p>
+      <span class="badge soon">Coming soon</span>
+    </div>
+  </main>
+
+  <footer>
+    Made with care &middot; <a href="https://github.com/andressolve/games">source</a>
+  </footer>
+</body>
+</html>
