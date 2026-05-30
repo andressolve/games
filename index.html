@@ -19,19 +19,53 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
     min-height: 100%;
-    background:
-      radial-gradient(1200px 700px at 50% -10%, #16203180, transparent),
-      var(--bg);
+    background: var(--bg);
     color: var(--text);
     font-family: "SF Mono", "Cascadia Code", ui-monospace, Menlo, Consolas, monospace;
     -webkit-font-smoothing: antialiased;
   }
-  body { display: flex; flex-direction: column; align-items: center; padding: 64px 20px 48px; min-height: 100vh; }
-  header { text-align: center; margin-bottom: 48px; }
-  h1 { font-size: 48px; letter-spacing: 10px; font-weight: 700; }
-  h1 .accent { color: var(--accent); }
-  .tagline { color: var(--muted); font-size: 13px; margin-top: 12px; letter-spacing: 1px; line-height: 1.8; }
+  body { display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
 
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 60px 20px 90px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("images/hero.png") center 32% / cover no-repeat;
+    z-index: 0;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, #06080feb 0%, #06080f73 26%, #06080f00 52%, var(--bg) 100%),
+      radial-gradient(800px 320px at 50% 14%, #06080f80, transparent);
+    z-index: 1;
+  }
+  header { position: relative; z-index: 2; }
+  h1 {
+    font-size: 56px; letter-spacing: 12px; font-weight: 700;
+    text-shadow: 0 2px 24px #000a, 0 0 40px #5cc8ff22;
+  }
+  h1 .accent { color: var(--accent); }
+  .tagline {
+    color: #c3cdda; font-size: 13px; margin-top: 14px; letter-spacing: 1px; line-height: 1.8;
+    text-shadow: 0 1px 12px #000c;
+  }
+
+  main { position: relative; z-index: 3; width: 100%; display: flex; justify-content: center; padding: 32px 20px 48px; }
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
@@ -59,7 +93,7 @@
     box-shadow: 0 14px 40px #5cc8ff1f;
   }
   .card .thumb {
-    height: 88px;
+    height: 132px;
     border-radius: 10px;
     margin-bottom: 18px;
     display: flex;
@@ -68,7 +102,9 @@
     gap: 5px;
     background: #06090f;
     border: 1px solid var(--line);
+    overflow: hidden;
   }
+  .card .thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; display: block; }
   .blk { width: 16px; height: 16px; border-radius: 3px; }
   .card h2 { font-size: 20px; letter-spacing: 1px; }
   .card p { color: var(--muted); font-size: 12px; line-height: 1.7; margin-top: 8px; flex: 1; }
@@ -86,40 +122,41 @@
   .badge.soon { background: #181d27; color: var(--muted); border: 1px solid var(--line); }
   .card.disabled { opacity: 0.6; cursor: default; }
 
-  footer { margin-top: 48px; color: var(--muted); font-size: 11px; letter-spacing: 1px; }
+  footer { margin-top: auto; padding: 32px 20px 40px; color: var(--muted); font-size: 11px; letter-spacing: 1px; }
   footer a { color: var(--accent); text-decoration: none; }
 </style>
 </head>
 <body>
-  <header>
-    <h1>GA<span class="accent">MES</span></h1>
-    <p class="tagline">Built to be played, not to be easy.<br>Sharp games for sharp minds.</p>
-  </header>
+  <section class="hero">
+    <header>
+      <h1>GA<span class="accent">MES</span></h1>
+      <p class="tagline">Built to be played, not to be easy.<br>Sharp games for sharp minds.</p>
+    </header>
+  </section>
 
-  <main class="grid">
-    <a class="card" href="tetris.html">
-      <div class="thumb">
-        <span class="blk" style="background:#36c5e0"></span>
-        <span class="blk" style="background:#c061ff"></span>
-        <span class="blk" style="background:#ff9f43"></span>
-        <span class="blk" style="background:#3fd66f"></span>
-      </div>
-      <h2>Tetris</h2>
-      <p>Guideline mechanics: SRS rotation with wall kicks, 7-bag, hold, ghost,
-         T-spins, back-to-back and combo scoring. Music speeds up as you do.</p>
-      <span class="badge play">Play &rarr;</span>
-    </a>
+  <main>
+    <div class="grid">
+      <a class="card" href="tetris.html">
+        <div class="thumb">
+          <img src="images/tetris-thumb.png" alt="Ornate Russian onion-dome tower with glowing tetromino pieces">
+        </div>
+        <h2>Tetris</h2>
+        <p>Guideline mechanics: SRS rotation with wall kicks, 7-bag, hold, ghost,
+           T-spins, back-to-back and combo scoring. Music speeds up as you do.</p>
+        <span class="badge play">Play &rarr;</span>
+      </a>
 
-    <div class="card disabled">
-      <div class="thumb">
-        <span class="blk" style="background:#2a3340"></span>
-        <span class="blk" style="background:#2a3340"></span>
-        <span class="blk" style="background:#2a3340"></span>
+      <div class="card disabled">
+        <div class="thumb">
+          <span class="blk" style="background:#2a3340"></span>
+          <span class="blk" style="background:#2a3340"></span>
+          <span class="blk" style="background:#2a3340"></span>
+        </div>
+        <h2>Brain Gym</h2>
+        <p>A workout for working memory, pattern recognition, and mental rotation.
+           Designed to stretch the mind, not pass the time.</p>
+        <span class="badge soon">Coming soon</span>
       </div>
-      <h2>Brain Gym</h2>
-      <p>A workout for working memory, pattern recognition, and mental rotation.
-         Designed to stretch the mind, not pass the time.</p>
-      <span class="badge soon">Coming soon</span>
     </div>
   </main>
 

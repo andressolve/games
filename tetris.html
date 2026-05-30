@@ -28,7 +28,22 @@
     -webkit-font-smoothing: antialiased;
     overflow: hidden;
   }
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: 0;
+    background: url("images/game-bg.png") center center / cover no-repeat;
+    opacity: 0.92;
+  }
+  body::after {
+    content: "";
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(560px 620px at 50% 50%, #04060bd9, #04060b66 60%, transparent 78%),
+      linear-gradient(180deg, #04060b00 60%, #04060bcc 100%);
+  }
+  body.hc::before { opacity: 0; }
   #app {
+    position: relative; z-index: 1;
     display: flex;
     align-items: flex-start;
     justify-content: center;
