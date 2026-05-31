@@ -3,45 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tetris</title>
+<title>Tetris — GAMES</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0b0f17;
-    --panel: #141a24;
-    --panel-2: #1b2330;
-    --line: #232c3a;
-    --text: #eaf0f7;
-    --muted: #8a97a8;
-    --accent: #5cc8ff;
-    --accent-2: #7c5cff;
-    --good: #46d39a;
-    --focus: #ffd166;
+    --bg: #100e0b;
+    --panel: #181510;
+    --panel-2: #1f1b14;
+    --line: #2b2620;
+    --text: #ece3d0;
+    --muted: #8b8474;
+    --accent: #d12b24;
+    --accent-2: #2f6bff;
+    --good: #2f6bff;
+    --focus: #f2c14e;
+    --display: "Anton", "Arial Narrow", Impact, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
     height: 100%;
-    background:
-      radial-gradient(1200px 700px at 50% -10%, #16203180, transparent),
-      var(--bg);
+    background: var(--bg);
     color: var(--text);
     font-family: "SF Mono", "Cascadia Code", ui-monospace, Menlo, Consolas, monospace;
     -webkit-font-smoothing: antialiased;
     overflow: hidden;
   }
+  /* constructivist skyline backdrop — cupolas & towers flank the board */
   body::before {
     content: "";
     position: fixed; inset: 0; z-index: 0;
-    background: url("images/game-bg.png") center center / cover no-repeat;
-    opacity: 0.92;
+    background: #0b0907 url("images/k-game-bg-3.png") center top / cover no-repeat;
   }
   body::after {
     content: "";
     position: fixed; inset: 0; z-index: 0;
     background:
-      radial-gradient(560px 620px at 50% 50%, #04060bd9, #04060b66 60%, transparent 78%),
-      linear-gradient(180deg, #04060b00 60%, #04060bcc 100%);
+      radial-gradient(900px 70% at 50% 100%, #0b0907cc 0%, #0b090755 45%, transparent 75%),
+      linear-gradient(180deg, transparent 0 55%, #0b0907b0 100%),
+      repeating-linear-gradient(118deg, transparent 0 38px, #ffffff05 38px 39px);
   }
   body.hc::before { opacity: 0; }
+  body.hc::after { background: var(--bg); }
   #app {
     position: relative; z-index: 1;
     display: flex;
@@ -49,22 +53,23 @@
     justify-content: center;
     gap: 18px;
     height: 100%;
-    padding: 18px;
+    padding: 46px 18px 16px;
   }
   .rail { display: flex; flex-direction: column; gap: 14px; width: 176px; }
   .rail.left { align-items: stretch; }
   .box {
-    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-left: 3px solid var(--line);
+    border-radius: 0;
     padding: 12px 14px;
   }
   .box h2 {
-    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
     color: var(--muted); margin-bottom: 8px; font-weight: 600;
   }
-  .stat { font-size: 28px; font-variant-numeric: tabular-nums; line-height: 1; transition: color .15s; }
-  .stat.small { font-size: 20px; }
+  .stat { font-family: var(--display); font-size: 34px; letter-spacing: 1px; font-variant-numeric: tabular-nums; line-height: 1; transition: color .15s; }
+  .stat.small { font-size: 24px; }
   .pop { animation: pop .22s cubic-bezier(.2,1.4,.4,1); }
   @keyframes pop { 0% { transform: scale(1); } 35% { transform: scale(1.28); color: var(--accent); } 100% { transform: scale(1); } }
   .mini { display: block; width: 100%; }
@@ -72,10 +77,10 @@
   #stage { position: relative; }
   #board {
     display: block;
-    border-radius: 10px;
-    background: #05070c;
+    border-radius: 0;
+    background: #0b0907;
     border: 1px solid var(--line);
-    box-shadow: 0 0 80px #5cc8ff14, inset 0 0 60px #00000066;
+    box-shadow: 0 0 0 3px #0d0b08, 0 0 70px #d12b2418, inset 0 0 60px #00000066;
   }
 
   /* ---- Control legend ---- */
@@ -83,8 +88,8 @@
   .legend-row .act { color: var(--text); }
   kbd {
     display: inline-block; min-width: 18px; text-align: center;
-    background: #0c1119; border: 1px solid var(--line); border-bottom-width: 2px;
-    border-radius: 5px; padding: 2px 6px; font-size: 10px; color: var(--text);
+    background: #0c0a07; border: 1px solid var(--line); border-bottom-width: 2px;
+    border-radius: 0; padding: 2px 6px; font-size: 10px; color: var(--text);
     font-family: inherit;
   }
 
@@ -92,32 +97,32 @@
   .toggles { display: flex; flex-direction: column; gap: 8px; }
   .toggle {
     display: flex; align-items: center; justify-content: space-between;
-    width: 100%; background: #0c1119; border: 1px solid var(--line);
-    border-radius: 9px; padding: 9px 11px; color: var(--text);
+    width: 100%; background: #0c0a07; border: 1px solid var(--line);
+    border-radius: 0; padding: 9px 11px; color: var(--text);
     font-family: inherit; font-size: 12px; cursor: pointer; transition: .12s;
   }
   .toggle:hover { border-color: var(--accent); }
   .toggle:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   .toggle .state { font-size: 10px; letter-spacing: 1px; color: var(--muted); }
-  .toggle.on { border-color: #2a6f8f; background: #0e1a22; }
+  .toggle.on { border-color: var(--good); background: #0e1426; }
   .toggle.on .state { color: var(--good); }
 
   /* ---- Overlays ---- */
   .screen {
-    position: absolute; inset: 0; border-radius: 10px;
+    position: absolute; inset: 0; border-radius: 0;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     text-align: center; gap: 12px; padding: 26px;
-    background: linear-gradient(180deg, #060912f2, #0b0f17f2);
+    background: linear-gradient(180deg, #100e0bf5, #0b0907f7);
     backdrop-filter: blur(2px);
   }
   .screen.hidden { display: none; }
-  .screen h1 { font-size: 34px; letter-spacing: 6px; font-weight: 700; }
+  .screen h1 { font-family: var(--display); font-size: 56px; letter-spacing: 3px; font-weight: 400; text-transform: uppercase; }
   .screen h1 .accent { color: var(--accent); }
   .screen .sub { color: var(--muted); font-size: 12px; line-height: 1.9; }
   .screen .big { font-size: 15px; }
   .screen .big .accent { color: var(--accent); }
   .prompt { margin-top: 6px; font-size: 13px; }
-  .scorebig { font-size: 22px; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .scorebig { font-family: var(--display); font-size: 30px; color: var(--accent); font-variant-numeric: tabular-nums; }
 
   /* ---- Settings (pause) ---- */
   #pause .panel { width: 100%; max-width: 320px; display: flex; flex-direction: column; gap: 14px; }
@@ -128,12 +133,12 @@
   .set-row:focus-within label { color: var(--text); }
   input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   .btn {
-    background: linear-gradient(180deg, #1d2735, #161e29);
-    border: 1px solid var(--line); border-radius: 9px;
-    color: var(--text); font-family: inherit; font-size: 12px;
-    padding: 9px 14px; cursor: pointer; transition: .12s;
+    background: #1f1b14;
+    border: 1px solid var(--line); border-radius: 0;
+    color: var(--text); font-family: inherit; font-size: 12px; letter-spacing: 1px;
+    padding: 10px 14px; cursor: pointer; transition: .12s;
   }
-  .btn:hover { border-color: var(--accent); }
+  .btn:hover { border-color: var(--accent); background: var(--accent); color: var(--bone, #ece3d0); }
   .btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   .divider { height: 1px; background: var(--line); margin: 2px 0; }
   .hint { font-size: 10px; color: var(--muted); line-height: 1.7; }
@@ -141,10 +146,30 @@
 
   /* ---- High contrast ---- */
   body.hc #board { background: #000; }
-  body.hc .box { background: #0a0e15; }
+  body.hc .box { background: #0a0805; }
+
+  /* brand bar */
+  .brand {
+    position: fixed; top: 14px; left: 18px; z-index: 4;
+    display: flex; align-items: center; gap: 9px;
+    text-decoration: none; color: var(--text);
+  }
+  .brand .mk { --u: 5px; display: inline-grid; grid-template-columns: repeat(3, var(--u)); grid-auto-rows: var(--u); gap: 1.5px; }
+  .brand .mk i { background: var(--accent); display: block; }
+  .brand .mk i:nth-child(1){ grid-column:2; grid-row:1; }
+  .brand .mk i:nth-child(2){ grid-column:1; grid-row:2; }
+  .brand .mk i:nth-child(3){ grid-column:2; grid-row:2; }
+  .brand .mk i:nth-child(4){ grid-column:3; grid-row:2; }
+  .brand .txt { font-family: var(--display); font-size: 15px; letter-spacing: 2px; }
+  .brand .txt .sub { color: var(--muted); }
+  .brand:hover .txt { color: var(--accent); }
 </style>
 </head>
 <body>
+<a class="brand" href="index.html" title="Back to catalogue">
+  <span class="mk"><i></i><i></i><i></i><i></i></span>
+  <span class="txt">GAMES <span class="sub">/ TETRIS</span></span>
+</a>
 <div id="app">
   <!-- LEFT RAIL -->
   <aside class="rail left">

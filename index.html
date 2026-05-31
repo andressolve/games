@@ -3,165 +3,192 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Games</title>
+<title>GAMES — Konstrukt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0b0f17;
-    --panel: #141a24;
-    --panel-2: #1b2330;
-    --line: #232c3a;
-    --text: #eaf0f7;
-    --muted: #8a97a8;
-    --accent: #5cc8ff;
-    --accent-2: #7c5cff;
-    --good: #46d39a;
+    --ink:    #100e0b;
+    --ink-2:  #181510;
+    --bone:   #ece3d0;
+    --bone-2: #cfc6b3;
+    --dim:    #8b8474;
+    --blood:  #d12b24;
+    --blood-2:#9d1f1a;
+    --blue:   #2f6bff;
+    --line:   #2b2620;
+    --display: "Anton", "Arial Narrow", Impact, sans-serif;
+    --mono: "SF Mono", "Cascadia Code", ui-monospace, Menlo, Consolas, monospace;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body {
-    min-height: 100%;
-    background: var(--bg);
-    color: var(--text);
-    font-family: "SF Mono", "Cascadia Code", ui-monospace, Menlo, Consolas, monospace;
+  html { scroll-behavior: smooth; }
+  body {
+    min-height: 100vh;
+    background: var(--ink);
+    color: var(--bone);
+    font-family: var(--mono);
     -webkit-font-smoothing: antialiased;
-  }
-  body { display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-
-  .hero {
-    position: relative;
-    width: 100%;
-    min-height: 520px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 60px 20px 90px;
-    text-align: center;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: url("images/hero.png") center 32% / cover no-repeat;
-    z-index: 0;
-  }
-  .hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(180deg, #06080feb 0%, #06080f73 26%, #06080f00 52%, var(--bg) 100%),
-      radial-gradient(800px 320px at 50% 14%, #06080f80, transparent);
-    z-index: 1;
-  }
-  header { position: relative; z-index: 2; }
-  h1 {
-    font-size: 56px; letter-spacing: 12px; font-weight: 700;
-    text-shadow: 0 2px 24px #000a, 0 0 40px #5cc8ff22;
-  }
-  h1 .accent { color: var(--accent); }
-  .tagline {
-    color: #c3cdda; font-size: 13px; margin-top: 14px; letter-spacing: 1px; line-height: 1.8;
-    text-shadow: 0 1px 12px #000c;
+    overflow-x: hidden;
   }
 
-  main { position: relative; z-index: 3; width: 100%; display: flex; justify-content: center; padding: 32px 20px 48px; }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
-    gap: 22px;
-    width: 100%;
-    max-width: 960px;
-    justify-content: center;
+  /* ---- brand mark: T-tetromino ---- */
+  .mark { --u: 7px; display: inline-grid; grid-template-columns: repeat(3, var(--u)); grid-auto-rows: var(--u); gap: 2px; }
+  .mark i { background: var(--blood); display: block; }
+  .mark i:nth-child(1) { grid-column: 2; grid-row: 1; }
+  .mark i:nth-child(2) { grid-column: 1; grid-row: 2; }
+  .mark i:nth-child(3) { grid-column: 2; grid-row: 2; }
+  .mark i:nth-child(4) { grid-column: 3; grid-row: 2; }
+
+  /* ---- masthead ---- */
+  .masthead {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 26px; border-bottom: 1px solid var(--line);
+    position: relative; z-index: 3;
   }
-  .card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(180deg, var(--panel), var(--panel-2));
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 22px;
-    text-decoration: none;
-    color: inherit;
-    transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
-    min-height: 220px;
+  .masthead .wm { font-family: var(--display); font-size: 20px; letter-spacing: 3px; }
+  .masthead .sep { flex: 1; height: 1px; background: var(--line); }
+  .masthead .est { font-size: 10px; letter-spacing: 3px; color: var(--dim); text-transform: uppercase; }
+
+  /* ---- hero ---- */
+  .hero { position: relative; width: 100%; overflow: hidden; border-bottom: 3px solid var(--blood); }
+  .hero img.art { display: block; width: 100%; height: clamp(320px, 52vw, 600px); object-fit: cover; object-position: center; }
+  .plate {
+    position: absolute; left: 0; bottom: 0; z-index: 2;
+    background: var(--blood);
+    padding: 22px 40px 26px 26px;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 34px) 100%, 0 100%);
+    max-width: min(92%, 760px);
   }
-  a.card:hover {
-    transform: translateY(-4px);
-    border-color: var(--accent);
-    box-shadow: 0 14px 40px #5cc8ff1f;
-  }
-  .card .thumb {
-    height: 132px;
-    border-radius: 10px;
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    background: #06090f;
-    border: 1px solid var(--line);
-    overflow: hidden;
-  }
-  .card .thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; display: block; }
-  .blk { width: 16px; height: 16px; border-radius: 3px; }
-  .card h2 { font-size: 20px; letter-spacing: 1px; }
-  .card p { color: var(--muted); font-size: 12px; line-height: 1.7; margin-top: 8px; flex: 1; }
-  .badge {
-    align-self: flex-start;
-    margin-top: 16px;
-    font-size: 11px;
-    letter-spacing: 1.5px;
+  .plate h1 {
+    font-family: var(--display);
+    font-size: clamp(54px, 12vw, 132px);
+    line-height: .86; letter-spacing: 2px; color: var(--bone);
     text-transform: uppercase;
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-weight: 600;
   }
-  .badge.play { background: #0e1a22; color: var(--good); border: 1px solid #2a6f8f; }
-  .badge.soon { background: #181d27; color: var(--muted); border: 1px solid var(--line); }
-  .card.disabled { opacity: 0.6; cursor: default; }
+  .plate .tag {
+    margin-top: 12px; font-size: clamp(11px, 1.4vw, 13px);
+    letter-spacing: 2px; text-transform: uppercase; color: #f3d9d2; line-height: 1.7;
+    max-width: 560px;
+  }
+  .hero .corner {
+    position: absolute; top: 22px; right: 26px; z-index: 2;
+    font-size: 10px; letter-spacing: 4px; color: var(--ink);
+    text-transform: uppercase; text-align: right; line-height: 1.8; font-weight: 700;
+    mix-blend-mode: multiply;
+  }
 
-  footer { margin-top: auto; padding: 32px 20px 40px; color: var(--muted); font-size: 11px; letter-spacing: 1px; }
-  footer a { color: var(--accent); text-decoration: none; }
+  /* ---- section header ---- */
+  .section { max-width: 1040px; margin: 0 auto; padding: 0 26px; }
+  .sec-head {
+    display: flex; align-items: center; gap: 16px;
+    margin: 52px 0 26px;
+  }
+  .sec-head .num { font-family: var(--display); font-size: 30px; color: var(--blood); letter-spacing: 1px; }
+  .sec-head .label { font-size: 12px; letter-spacing: 5px; text-transform: uppercase; color: var(--bone-2); }
+  .sec-head .rule { flex: 1; height: 1px; background: var(--line); }
+  .sec-head .count { font-size: 11px; letter-spacing: 3px; color: var(--dim); }
+
+  /* ---- catalogue grid ---- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .card {
+    position: relative; display: flex; flex-direction: column;
+    background: var(--ink-2); padding: 0; text-decoration: none; color: inherit;
+    transition: background .14s ease;
+  }
+  a.card:hover { background: #1f1b14; }
+  a.card:hover .thumb img { transform: scale(1.03); }
+  a.card:hover .go { background: var(--bone); color: var(--ink); }
+  .thumb { position: relative; aspect-ratio: 16/10; overflow: hidden; background: #0a0805; border-bottom: 1px solid var(--line); }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .25s ease; display: block; }
+  .idx {
+    position: absolute; top: 10px; left: 12px; z-index: 2;
+    font-family: var(--display); font-size: 26px; color: var(--bone);
+    text-shadow: 0 2px 8px #000a; letter-spacing: 1px;
+  }
+  .body { padding: 18px 20px 22px; display: flex; flex-direction: column; flex: 1; }
+  .card h2 { font-family: var(--display); font-size: 30px; letter-spacing: 2px; text-transform: uppercase; }
+  .card p { color: var(--dim); font-size: 12px; line-height: 1.75; margin-top: 10px; flex: 1; }
+  .status { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
+  .go {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 2px; font-weight: 700;
+    text-transform: uppercase; padding: 8px 14px; transition: .14s;
+  }
+  .go.play { background: var(--blood); color: var(--bone); }
+  .go.soon { background: transparent; color: var(--dim); border: 1px solid var(--line); }
+  .card.disabled { opacity: .72; }
+  .card.disabled .thumb img { filter: grayscale(.5) brightness(.6); }
+
+  footer {
+    max-width: 1040px; margin: 64px auto 0; padding: 26px;
+    border-top: 1px solid var(--line);
+    display: flex; align-items: center; gap: 14px;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--dim);
+  }
+  footer .sep { flex: 1; height: 1px; background: var(--line); }
+  footer a { color: var(--bone-2); text-decoration: none; }
+  footer a:hover { color: var(--blood); }
 </style>
 </head>
 <body>
+  <div class="masthead">
+    <span class="mark"><i></i><i></i><i></i><i></i></span>
+    <span class="wm">GAMES</span>
+    <span class="sep"></span>
+    <span class="est">Konstrukt · Est. 2026</span>
+  </div>
+
   <section class="hero">
-    <header>
-      <h1>GA<span class="accent">MES</span></h1>
-      <p class="tagline">Built to be played, not to be easy.<br>Sharp games for sharp minds.</p>
-    </header>
+    <img class="art" src="images/k-hero.png" alt="Constructivist cathedral key art">
+    <div class="corner">No.01<br>Catalogue</div>
+    <div class="plate">
+      <h1>GAMES</h1>
+      <p class="tag">Built to be played, not to be easy.<br>Sharp games for sharp minds.</p>
+    </div>
   </section>
 
-  <main>
+  <div class="section">
+    <div class="sec-head">
+      <span class="num">01</span>
+      <span class="label">Catalogue</span>
+      <span class="rule"></span>
+      <span class="count">02 Titles</span>
+    </div>
+
     <div class="grid">
       <a class="card" href="tetris.html">
         <div class="thumb">
-          <img src="images/tetris-thumb.png" alt="Ornate Russian onion-dome tower with glowing tetromino pieces">
+          <span class="idx">01</span>
+          <img src="images/k-thumb.png" alt="Constructivist tower with stacking blocks">
         </div>
-        <h2>Tetris</h2>
-        <p>Guideline mechanics: SRS rotation with wall kicks, 7-bag, hold, ghost,
-           T-spins, back-to-back and combo scoring. Music speeds up as you do.</p>
-        <span class="badge play">Play &rarr;</span>
+        <div class="body">
+          <h2>Tetris</h2>
+          <p>Guideline mechanics: SRS rotation with wall kicks, 7-bag, hold, ghost,
+             T-spins, back-to-back and combo scoring. Music speeds up as you do.</p>
+          <div class="status"><span class="go play">Play &rarr;</span></div>
+        </div>
       </a>
 
       <div class="card disabled">
         <div class="thumb">
-          <span class="blk" style="background:#2a3340"></span>
-          <span class="blk" style="background:#2a3340"></span>
-          <span class="blk" style="background:#2a3340"></span>
+          <span class="idx">02</span>
+          <img src="images/k-thumb.png" alt="Placeholder">
         </div>
-        <h2>Brain Gym</h2>
-        <p>A workout for working memory, pattern recognition, and mental rotation.
-           Designed to stretch the mind, not pass the time.</p>
-        <span class="badge soon">Coming soon</span>
+        <div class="body">
+          <h2>Brain Gym</h2>
+          <p>A workout for working memory, pattern recognition, and mental rotation.
+             Designed to stretch the mind, not pass the time.</p>
+          <div class="status"><span class="go soon">In development</span></div>
+        </div>
       </div>
     </div>
-  </main>
+  </div>
 
   <footer>
-    Made with care &middot; <a href="https://github.com/andressolve/games">source</a>
+    <span class="mark"><i></i><i></i><i></i><i></i></span>
+    <span>Made with care</span>
+    <span class="sep"></span>
+    <a href="https://github.com/andressolve/games">Source &rarr;</a>
   </footer>
 </body>
 </html>
